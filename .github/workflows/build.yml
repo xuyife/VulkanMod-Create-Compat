@@ -22,7 +22,7 @@ jobs:
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: build
-        run: ./gradlew build
+        run: ./gradlew build -Ploom_version=1.6.11
       - name: Capture build artifacts
         uses: actions/upload-artifact@v7
         with:
