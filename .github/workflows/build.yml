@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: '21'
-          distribution: 'eclipse'
+          distribution: 'microsoft'
       - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: build
