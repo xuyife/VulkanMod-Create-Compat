@@ -3,7 +3,7 @@
 	"id": "vulkanmod_create_compat",
 	"version": "${version}",
 	"name": "VulkanMod Create Compat",
-	"description": "Fixes compatibility between VulkanMod and Create ",
+	"description": "Fixes compatibility between VulkanMod and Create.",
 	"authors": [
 		"Xuyifei"
 	],
