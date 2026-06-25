@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "net.xuyifei.vulkanmod_create_compat.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+      "vulkan_mod.GlUtilMixin",
+      "vulkan_mod.GlFramebufferMixin",
+
+      "create.SchematicHandlerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

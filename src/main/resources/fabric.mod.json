@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "vulkanmod_create_compat",
+	"version": "${version}",
+	"name": "VulkanMod Create Compat",
+	"description": "Fixes compatibility between VulkanMod and Create ",
+	"authors": [
+		"Xuyifei"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/vulkanmod_create_compat/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "net.xuyifei.vulkanmod_create_compat.VulkanModCreateCompat"
+		]
+	},
+	"mixins": [
+      "vulkanmod_create_compat.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

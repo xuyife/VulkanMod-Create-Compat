@@ -1,0 +1,100 @@
+plugins {
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    maven { url = "https://maven.parchmentmc.org" }
+    maven { url = "https://api.modrinth.com/maven" }
+    maven { url = "https://maven.terraformersmc.com/releases/" }
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url = "https://mvn.devos.one/releases/" }
+    maven { url = "https://maven.createmod.net/" }
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://cursemaven.com" }
+    maven { url = "https://maven.cafeteria.dev/releases" }
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" }
+    maven {
+        url = "https://api.modrinth.com/maven"
+        name = "maven.modrinth"
+    }
+}
+
+project.ext.lwjglVersion = "3.3.2"
+project.ext.jomlVersion = "1.10.4"
+project.ext.winNatives = "natives-windows"
+project.ext.linuxNatives = "natives-linux"
+project.ext.macosNatives = "natives-macos"
+project.ext.macosArmNatives = "natives-macos-arm64"
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.layered {
+        it.officialMojangMappings { nameSyntheticMembers = false }
+        it.parchment("org.parchmentmc.data:parchment-$minecraft_version:$parchment_version@zip")
+    }
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    modImplementation "maven.modrinth:vulkanmod:0.5.2"
+
+    implementation("org.lwjgl:lwjgl-vulkan:$lwjglVersion")
+    implementation("org.lwjgl:lwjgl-vma:$lwjglVersion")
+    runtimeOnly("org.lwjgl:lwjgl-vma:$lwjglVersion:$winNatives")
+    runtimeOnly("org.lwjgl:lwjgl-vma:$lwjglVersion:$linuxNatives")
+    runtimeOnly("org.lwjgl:lwjgl-vma:$lwjglVersion:$macosNatives")
+    runtimeOnly("org.lwjgl:lwjgl-vma:$lwjglVersion:$macosArmNatives")
+    implementation("org.lwjgl:lwjgl-shaderc:$lwjglVersion")
+    runtimeOnly("org.lwjgl:lwjgl-shaderc:$lwjglVersion:$winNatives")
+    runtimeOnly("org.lwjgl:lwjgl-shaderc:$lwjglVersion:$linuxNatives")
+    runtimeOnly("org.lwjgl:lwjgl-shaderc:$lwjglVersion:$macosNatives")
+    runtimeOnly("org.lwjgl:lwjgl-shaderc:$lwjglVersion:$macosArmNatives")
+    runtimeOnly("org.lwjgl:lwjgl-vulkan:$lwjglVersion:$macosNatives")
+    runtimeOnly("org.lwjgl:lwjgl-vulkan:$lwjglVersion:$macosArmNatives")
+
+    modImplementation("com.simibubi.create:create-fabric-${minecraft_version}:6.0.7.0+mc1.20.1-build.1716")
+}
+
+processResources {
+    def version = project.version
+    inputs.property "version", version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
+
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+    def projectName = project.name
+    inputs.property "projectName", projectName
+
+    from("LICENSE") {
+        rename { "${it}_$projectName" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+    }
+}
