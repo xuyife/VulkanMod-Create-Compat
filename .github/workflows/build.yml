@@ -10,20 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v6
       - name: validate gradle wrapper
         uses: gradle/actions/wrapper-validation@v6
-      - name: setup jdk
+      - name: Setup jdk
         uses: actions/setup-java@v5
         with:
           java-version: '21'
-          distribution: 'microsoft'
-      - name: make gradle wrapper executable
+          distribution: 'eclipse'
+      - name: Make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
-      - name: capture build artifacts
+      - name: Capture build artifacts
         uses: actions/upload-artifact@v7
         with:
           name: Artifacts
